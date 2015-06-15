@@ -205,8 +205,9 @@ void Hook(void)
         pop        eax
     }
 
-    GenuineNtQuerySystemInformation = 
-		(fn_NtQuerySystemInformation) InterlockedExchange((PLONG) &SDT(ZwQuerySystemInformation), (LONG)FakeNtQuerySystemInformation);
+    GenuineNtQuerySystemInformation = (fn_NtQuerySystemInformation) InterlockedExchange(
+		(PLONG) &SDT(ZwQuerySystemInformation),
+		(LONG)FakeNtQuerySystemInformation);
 
     __asm
     {
@@ -230,7 +231,7 @@ void Unhook(void)
         pop        eax
     }
 
-    InterlockedExchange( (PLONG) &SDT(ZwQuerySystemInformation),  (LONG) GenuineNtQuerySystemInformation);
+    InterlockedExchange((PLONG) &SDT(ZwQuerySystemInformation), (LONG) GenuineNtQuerySystemInformation);
 
     __asm
     {
